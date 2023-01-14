@@ -5,6 +5,23 @@
     <title>Index_page</title>
 </head>
 <body>
-    <h1>{{ massage }}</h1>
+    <h1>{{ message }}</h1>
+    <table border="1">
+        <thead>
+            <td>name</td>
+            <td>surname</td>
+            <td>email</td>
+            <td>date</td>
+        </thead>
+        {% for user in data %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
 </body>
 </html>
