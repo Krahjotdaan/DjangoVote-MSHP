@@ -25,7 +25,8 @@ class Answer_Choise(models.Model): # таблица вариантов отве�
 
 
 class Answer_Users(models.Model): # таблица ответов пользователей
+    id = models.IntegerField(primary_key=True)
     description = models.CharField(max_length=1000)
-    # author = models.ForeignKey(Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:N
-    voting_id = models.ForeignKey(Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:N
+    author = models.ManyToManyField(Users, blank=True) # связь M:N
+    voting_id = models.ManyToManyField(Voting, blank=True) # связь M:N
 
