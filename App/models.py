@@ -1,31 +1,62 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
-class Users(models.Model): # таблица пользователи
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20)
-    surname = models.CharField(max_length=20)
-    email = models.EmailField()
-    date = models.DateTimeField()
-
-
-class Voting(models.Model): # таблица голосований
-    id = models.IntegerField(primary_key=True)
+class Voting(models.Model):
+    """
+    Таблица голосований
+    """
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    date = models.DateTimeField(default=0)
-    author = models.ForeignKey(to=Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:N
+    created_at = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)  # связь 1:N
+
+    @staticmethod
+    def add(title, description, author):
+        Voting.objects.create(
+            title=title,
+            description=description,
+            author=author
+        )
+
+    @staticmethod
+    def get():
+        return Voting.objects.all()
 
 
-class Answer_Choise(models.Model): # таблица вариантов ответов
-    id = models.IntegerField(primary_key=True)
+class VoteVariant(models.Model):
+    """
+    Таблица вариантов ответов
+    """
     description = models.CharField(max_length=1000)
-    date = models.DateTimeField(default=0)
-    voting_id = models.ForeignKey(to=Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:NS
+    created_at = models.DateTimeField(default=timezone.now)
+    voting_id = models.ForeignKey(to=Voting, on_delete=models.CASCADE)  # связь 1:N
+
+    def create_votefact(self, user):
+        # todo: нельзя голосовать, если вы уже проголосовали
+        # todo: нельзя голосовать, если voting.created_at находится в будущем относительно текущего момента
+        VoteFact.objects.create(author=user, variant=self)
 
 
-class Answer_Users(models.Model): # таблица ответов пользователей
-    description = models.CharField(max_length=1000)
-    # author = models.ForeignKey(Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:N
-    voting_id = models.ForeignKey(Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:N
+class VoteFact(models.Model):
+    """
+    Таблица ответов пользователей
+    """
+    author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)  # связь 1:N
+    variant = models.ForeignKey(to=VoteVariant, default=1, on_delete=models.CASCADE)  # связь 1:N
+    created_at = models.DateTimeField(default=timezone.now)
 
+    @staticmethod
+    def get():
+        return VoteFact.objects.all()
+
+    @staticmethod
+    def get_facts_by_user(user):
+        # TODO: сделать
+        pass
+
+    @staticmethod
+    def get_facts_by_variant(variant):
+        # TODO: сделать
+        pass
