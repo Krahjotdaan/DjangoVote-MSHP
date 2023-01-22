@@ -1,32 +1,31 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
-class Users(models.Model): # таблица пользователи
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=20)
-    surname = models.CharField(max_length=20)
-    email = models.EmailField()
-    date = models.DateTimeField()
-
-
-class Voting(models.Model): # таблица голосований
-    id = models.IntegerField(primary_key=True)
+class Voting(models.Model):
+    """
+    Таблица голосований
+    """
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    date = models.DateTimeField(default=0)
-    author = models.ForeignKey(to=Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:N
+    created_at = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)  # связь 1:N
 
 
-class Answer_Choise(models.Model): # таблица вариантов ответов
-    id = models.IntegerField(primary_key=True)
+class VoteVariant(models.Model):
+    """
+    Таблица вариантов ответов
+    """
     description = models.CharField(max_length=1000)
-    date = models.DateTimeField(default=0)
-    voting_id = models.ForeignKey(to=Users, blank=True, null=True, on_delete=models.SET_NULL) # связь 1:NS
+    created_at = models.DateTimeField(default=timezone.now)
+    voting_id = models.ForeignKey(to=Voting, on_delete=models.CASCADE)  # связь 1:N
 
 
-class Answer_Users(models.Model): # таблица ответов пользователей
-    id = models.IntegerField(primary_key=True)
-    description = models.CharField(max_length=1000)
-    author = models.ManyToManyField(Users, blank=True) # связь M:N
-    voting_id = models.ManyToManyField(Voting, blank=True) # связь M:N
-
+class VoteFact(models.Model):
+    """
+    Таблица ответов пользователей
+    """
+    author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)  # связь 1:N
+    variant = models.ForeignKey(to=VoteVariant, default=1, on_delete=models.CASCADE)  # связь 1:N
+    created_at = models.DateTimeField(default=timezone.now)
