@@ -12,6 +12,18 @@ class Voting(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)  # связь 1:N
 
+    @staticmethod
+    def add(title, description, author):
+        Voting.objects.create(
+            title=title,
+            description=description,
+            author=author
+        )
+
+    @staticmethod
+    def get():
+        return Voting.objects.all()
+
 
 class VoteVariant(models.Model):
     """
