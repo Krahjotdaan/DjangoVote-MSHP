@@ -58,5 +58,4 @@ class VoteFact(models.Model):
 
     @staticmethod
     def get_facts_by_variant(variant):
-        # TODO: сделать
-        pass
+        return VoteFact.variant()
