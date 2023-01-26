@@ -20,8 +20,9 @@ from App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profil/', views.profil),
+    path('profile/', views.profile),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', views.index)
+    path('', views.index),
+    path('profile/profile_editing', views.profile_editing)
 ]
