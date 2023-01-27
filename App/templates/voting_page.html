@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Сайт</title>
+        <meta name="description" content="Интерактивное руководство по началу работы в Brackets.">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/voting.css' %}">
+    </head>
+    <body>
+        <div class = "quiz">
+            <div class = "top">
+                <div class = "question">Народ, a 12ый пул - норм?</div>
+                <div class = "author_ava">
+                <div class = "author">от NightFenix</div>
+                <div class = "ava"></div>
+                </div>
+            </div>
+            <table class="space_between" style = "width: 90%; height: 80%">
+                <tr>
+
+            <td>
+                <div  class = "answer_choice">
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="first_answer">
+                <label class="form-check-label" for="first_answer">
+                Конечно
+                </label>
+                </div>
+                </div>
+            </td>
+            <td align="left">
+            <div  class="rectangle_1"> </div>
+            </td>
+
+         </tr>
+               <tr>
+
+            <td>
+                <div  class = "answer_choice">
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="second_answer">
+                <label class="form-check-label" for="second_answer">
+                Нет, это кринж
+                </label>
+                </div>
+                </div>
+            </td>
+            <td align="left">
+            <div  class="rectangle_2"> </div>
+            </td>
+
+         </tr>
+              <tr>
+
+            <td>
+                <div  class = "answer_choice">
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="third_answer">
+                <label class="form-check-label" for="third_answer">
+                Фотонь
+                </label>
+                </div>
+                </div>
+            </td>
+            <td align="left">
+            <div  class="rectangle_3"> </div>
+            </td>
+
+         </tr>
+               <tr>
+
+            <td>
+                <div  class = "answer_choice">
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="answer" id="forth_answer">
+                <label class="form-check-label" for="forth_answer">
+                Чел, ты тосс
+                </label>
+                </div>
+                </div>
+            </td>
+            <td align="left">
+            <div  class="rectangle_4" > </div>
+            </td>
+
+         </tr>
+         </table>
+        </div>
+    </body>
+</html>
