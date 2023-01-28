@@ -5,7 +5,7 @@ from .forms import ProfileEditingForm
 def profile(request):
     context = dict()
     context['title'] = 'Настройки профиля'
-
+    return render(request, 'profil.html', context)
 
 def index(request):
     context = dict()
