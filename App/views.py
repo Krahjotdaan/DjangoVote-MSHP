@@ -1,6 +1,4 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic.detail import DetailView
-from App.models import Profile
+from django.shortcuts import render
 
 
 def profil(request):
