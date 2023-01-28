@@ -5,9 +5,19 @@
     <title>Index_page</title>
 </head>
 <body>
-    <a href="{% url 'django_registration_register'%}">Зарегистрироваться</a> |
-    <a href="{% url 'login'%}">Войти</a> |
-
+    <div>
+    {% block content %}
+    {% endblock content %}
+    </div>
+    <a href="{% url 'home' %}">Голосования</a></h1> |
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout'%}">Выйти</a>
+        <p>Привет {{ user.username }}!</p>
+    {% else %}
+        <a href="{% url 'django_registration_register'%}">Зарегистрироваться</a> |
+        <a href="{% url 'login' %}">Войти</a>
+        <p>Вы не зарегистрированы</p>
+    {% endif %}
     <h1>{{ message }}</h1>
     <table border="1">
         <thead>
@@ -25,6 +35,5 @@
         </tr>
         {% endfor %}
     </table>
-
 </body>
 </html>
