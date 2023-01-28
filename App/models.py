@@ -53,8 +53,8 @@ class VoteFact(models.Model):
 
     @staticmethod
     def get_facts_by_user(user):
-        # TODO: сделать
-        pass
+        fact = VoteFact.objects.filter(author=user)
+        return fact
 
     @staticmethod
     def get_facts_by_variant(variant):
