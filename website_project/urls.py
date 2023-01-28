@@ -19,8 +19,8 @@ from App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profil/', views.profil),
+    path('profil/', views.profil, name="profile"),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', views.index, name='home')
+    path('', views.index, name='home'),
 ]

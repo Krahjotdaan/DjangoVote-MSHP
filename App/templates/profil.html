@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% load static %}
     <title>Title</title>
 </head>
 <body>
-    <h1>{{ title }}</h1>
+    <a href="{% url 'home' %}">Голосования</a> |
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout'%}">Выйти</a>
+    {% endif %}
+    <p>Имя пользователя: {{ user.username }}</p>
+    <p>Почта: {{ user.email }}</p>
 </body>
 </html>

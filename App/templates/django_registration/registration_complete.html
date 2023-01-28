@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+    <a href="{% url 'home' %}">Голосования</a> |
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout'%}">Выйти</a>
+    {% endif %}
+  <h3>Спасибо за регистрацию!</h3>
+  <p>Вы успешно зарегистрировали свой аккаунт. Перейдите в раздел "Голосования", чтобы вернуться на главную страницу.</p>
+  <p>С уважением, администрация сайта.</p>
 </body>
 </html>
