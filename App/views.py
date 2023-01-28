@@ -3,6 +3,7 @@ import datetime
 from django.shortcuts import render
 from App import models
 from App.tables_classes.Users import Users
+from App.forms import ProfileEditingForm
 
 def profil(request):
     context = dict()
