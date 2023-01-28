@@ -1,15 +1,20 @@
+import datetime
+
 from django.shortcuts import render
-from .forms import ProfileEditingForm
+from App import models
+from App.tables_classes.Users import Users
 
-
-def profile(request):
+def profil(request):
     context = dict()
     context['title'] = 'Настройки профиля'
     return render(request, 'profil.html', context)
 
 def index(request):
+
     context = dict()
     context['message'] = 'Пока пусто'
+
+
     return render(request, 'index.html', context=context)
 
 
@@ -34,3 +39,6 @@ def profile_editing(request):
         context['form'] = ProfileEditingForm()
 
     return render(request, 'profile_editing.html', context=context)
+
+def votings(request):
+    return render(request, 'voting_page.html')
