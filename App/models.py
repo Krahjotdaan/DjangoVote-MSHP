@@ -36,10 +36,12 @@ class VoteVariant(models.Model):
     def create_votefact(self, user):
         # todo: нельзя голосовать, если вы уже проголосовали
         # todo: нельзя голосовать, если voting.created_at находится в будущем относительно текущего момента
+        # VoteFact.objects.create(author=user, variant=self)
         if VoteFact.get_facts_by_user(user) == None and Voting.created_at > timezone.now:
             VoteFact.objects.create(author=user, variant=self, isVoted_flag=True)
         else:
             pass
+
 
 
 class VoteFact(models.Model):
@@ -48,7 +50,8 @@ class VoteFact(models.Model):
     """
     author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)  # связь 1:N
     variant = models.ForeignKey(to=VoteVariant, default=1, on_delete=models.CASCADE)  # связь 1:N
-    isVoted_flag = models.ForeignKey(to=VoteVariant, default=True, on_delete=models.CASCADE)
+    # isVoted_flag = models.ForeignKey(to=VoteVariant, default=1, on_delete=models.CASCADE)
+    """ ^^^^^^ ломает проект ^^^^^^^^^ """
     created_at = models.DateTimeField(default=timezone.now)
 
     @staticmethod
@@ -57,9 +60,8 @@ class VoteFact(models.Model):
 
     @staticmethod
     def get_facts_by_user(user):
-        fact = VoteFact.objects.filter(author=user)
-        return fact
+        return VoteFact.objects.filter(author=user)
 
     @staticmethod
     def get_facts_by_variant(variant):
-        return VoteFact.variant()
+        return VoteFact.objects.filter(variant=variant)
