@@ -1,25 +1,21 @@
-import datetime
-
 from django.shortcuts import render
-from App import models
-from App.tables_classes.Users import Users
-from App.forms import MakeVotingForm
-def profil(request):
+
+from App.forms import MakeVotingForm, ProfileEditingForm
+
+
+def profile_page(request):
     context = dict()
     context['title'] = 'Настройки профиля'
-    return render(request, 'profil.html', context)
+    return render(request, 'profile/index.html', context)
+
 
 def index(request):
-
     context = dict()
     context['message'] = 'Пока пусто'
-
-
     return render(request, 'index.html', context=context)
 
 
 def profile_editing(request):
-
     context = dict()
 
     if request.method == 'POST':
@@ -38,7 +34,8 @@ def profile_editing(request):
         context['nothing_entered'] = True
         context['form'] = ProfileEditingForm()
 
-    return render(request, 'profile_editing.html', context=context)
+    return render(request, 'profile/edit.html', context=context)
+
 
 def make_voting(request):
     context = dict()
@@ -54,7 +51,8 @@ def make_voting(request):
     else:
         context['nothing_entered'] = True
         context['form'] = MakeVotingForm()
-    return render(request, 'voting_page.html', context=context)
+    return render(request, 'votings/create.html', context=context)
 
-def votings(request):
-    return render(request, 'voting_page.html')
+
+def voting_page_template(request):
+    return render(request, 'votings/details_template.html')

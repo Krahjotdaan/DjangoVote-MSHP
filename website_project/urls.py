@@ -17,14 +17,24 @@ from django.contrib import admin
 from django.urls import path, include
 from App import views
 
+
 urlpatterns = [
+    # system
     path('admin/', admin.site.urls),
-    path('profile/', views.profil),
+
+    # index
+    path('', views.index, name='index'),
+
+    # profile
+    path('profile/', views.profile_page, name='profile'),
+    path('profile/edit/', views.profile_editing, name='profile_edit'),
+
+    # login and signin
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('voting_page', views.votings),
-    path('make_voting', views.make_voting),
-    # path('', views.index),
-    path('profile/profile_editing', views.profile_editing),
-    path('', views.index, name='home')
+
+    # votings
+    path('votings/details_template/', views.voting_page_template, name='voting_details'),
+    path('votings/create/', views.make_voting, name='voting_create'),
+
 ]
