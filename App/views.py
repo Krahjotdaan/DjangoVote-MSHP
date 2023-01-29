@@ -28,15 +28,17 @@ def profile_editing(request):
 
         if form.is_valid():
             name = form.data['name']
-            surname = form.data['surname']
             email = form.data['email']
-            user_id = request.user.id
+            request.user.username = name
+            request.user.email = email
+            #todo сделать чтобы изменялся весь пользователь
         else:
             context['form'] = form
 
     else:
         context['nothing_entered'] = True
         context['form'] = ProfileEditingForm()
+    context['form'] = ProfileEditingForm()
 
     return render(request, 'profile_editing.html', context=context)
 
