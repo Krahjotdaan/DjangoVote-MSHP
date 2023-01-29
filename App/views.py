@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from App import models
 from App.tables_classes.Users import Users
-from App.forms import ProfileEditingForm, VotingForm
+from App.forms import ProfileEditingForm, VotingForm, VariantForm
 def profil(request):
     context = dict()
     context['title'] = 'Настройки профиля'
@@ -50,6 +50,21 @@ def votings(request):
         'data': data,
         'variants': variants,
     }
+    answer = request.GET.get('variant', 0)
+
+    # for i in context['test']:
+    #     context['test2'] = i
+    to_publicate = True
+    # context['test'] = models.VoteVariant.objects.filter(id=answer)[0].voting_id
+    if(answer != 0):
+        for i in models.VoteFact.get_facts_by_user(request.user):
+            if models.VoteVariant.objects.filter(id=answer)[0].voting_id == i.variant.voting_id:
+                to_publicate = False
+    if answer != 0 and to_publicate:
+
+        models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
+
+
     return render(request, 'voting_page.html', context)
 @login_required
 def make_voting(request):

@@ -105,6 +105,7 @@
   </nav>
 {% for i in data %}
 <div class="quiz mt-5">
+    {{ ez }}
     <div class="top">
         <h4 class="question">{{i.title}}</h4>
         <div class="author_ava">
@@ -117,22 +118,22 @@
     <table class="space_between" style="width: 90%; height: 80%">
         {% for variant in variants %}
             {% if variant.voting_id == i %}
-                <tr>
-                    <td>
-                        <div class="answer_choice">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="answer{{variant}}" id="answer{{variant}}">
-                                <label class="form-check-label" for="answer{{variant}}">
-                                    {{ variant.description }}
-                                </label>
+<!--                <form action="" method="post">-->
+                    <tr>
+                        <td>
+                            <div class="answer_choice">
+                                <div class="form-check">
+                                    <a href="?variant={{variant.id}}">{{ variant.description }}</a>
+                                    {{test}}
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td align="left">
-                        <div class="rectangle_1"></div>
-                    </td>
+                        </td>
+                        <td align="left">
+                            <div class="rectangle_1"></div>
+                        </td>
 
-                </tr>
+                    </tr>
+<!--                </form>-->
             {% endif %}
         {% endfor %}
 <!--        <tr>-->
