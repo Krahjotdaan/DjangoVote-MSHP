@@ -100,7 +100,7 @@
 
     <!-- отображение пользователя на главной странице -->
     {% if user.is_authenticated %}
-    <h1 class="mt-5">Привет, <b>{{ user.username }}</b>!</h1>
+    <h1 class="mt-5 p-3">Привет, <b>{{ user.username }}</b>!</h1>
     {% else %}
     <h1 class="mt-5 p-3">Привет, sus</h1>
     {% endif %}
