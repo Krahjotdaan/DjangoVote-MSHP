@@ -3,7 +3,7 @@ import datetime
 from django.shortcuts import render
 from App import models
 from App.tables_classes.Users import Users
-
+from App.forms import MakeVotingForm
 def profil(request):
     context = dict()
     context['title'] = 'Настройки профиля'
@@ -39,6 +39,22 @@ def profile_editing(request):
         context['form'] = ProfileEditingForm()
 
     return render(request, 'profile_editing.html', context=context)
+
+def make_voting(request):
+    context = dict()
+
+    if request.method == 'POST':
+        form = MakeVotingForm(request.POST)
+
+        if form.is_valid():
+            context['form'] = form
+        else:
+            context['form'] = ''
+
+    else:
+        context['nothing_entered'] = True
+        context['form'] = MakeVotingForm()
+    return render(request, 'voting_page.html', context=context)
 
 def votings(request):
     return render(request, 'voting_page.html')

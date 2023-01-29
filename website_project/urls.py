@@ -23,6 +23,7 @@ urlpatterns = [
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('voting_page', views.votings),
+    path('make_voting', views.make_voting),
     # path('', views.index),
     path('profile/profile_editing', views.profile_editing),
     path('', views.index, name='home')
