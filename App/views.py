@@ -45,42 +45,6 @@ def profile_editing(request):
     return render(request, 'profile/edit.html', context=context)
 
 
-def make_voting(request):
-    context = dict()
-
-    if request.method == 'POST':
-        form = MakeVotingForm(request.POST)
-
-        if form.is_valid():
-            context['form'] = form
-        else:
-            context['form'] = ''
-
-    else:
-        context['nothing_entered'] = True
-        context['form'] = MakeVotingForm()
-    return render(request, 'votings/create.html', context=context)
-
-
-def votings_list_page(request):
-    data = models.Voting.objects.all()
-    data = list(reversed(data))
-    variants = models.VoteVariant.objects.all()
-    context = {
-        'data': data,
-        'variants': variants,
-    }
-    answer = request.GET.get('variant', 0)
-    to_publicate = True
-    if answer != 0:
-        for i in models.VoteFact.get_facts_by_user(request.user):
-            if models.VoteVariant.objects.filter(id=answer)[0].voting_id == i.variant.voting_id:
-                to_publicate = False
-    if answer != 0 and to_publicate:
-        models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
-    return render(request, 'votings/list.html', context)
-
-
 @login_required
 def make_voting(request):
     context = dict()
@@ -105,4 +69,26 @@ def make_voting(request):
         context['nothing_entered'] = True
         context['form'] = VotingForm()
     context['form'] = VotingForm()
-    return render(request, 'make_voting.html', context)
+    return render(request, 'votings/create.html', context)
+
+
+def votings_list_page(request):
+    data = models.Voting.objects.all()
+    data = list(reversed(data))
+    variants = models.VoteVariant.objects.all()
+    context = {
+        'data': data,
+        'variants': variants,
+    }
+    answer = request.GET.get('variant', 0)
+    to_publicate = True
+    if answer != 0:
+        for i in models.VoteFact.get_facts_by_user(request.user):
+            if models.VoteVariant.objects.filter(id=answer)[0].voting_id == i.variant.voting_id:
+                to_publicate = False
+    if answer != 0 and to_publicate:
+        models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
+    return render(request, 'votings/list.html', context)
+
+
+
