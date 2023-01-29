@@ -36,10 +36,9 @@ class VoteVariant(models.Model):
     def create_votefact(self, user):
         # todo: нельзя голосовать, если вы уже проголосовали
         # todo: нельзя голосовать, если voting.created_at находится в будущем относительно текущего момента
-        if VoteFact.get_facts_by_user(user) is None and Voting.created_at < timezone.now:
+        if VoteFact.get_facts_by_user(user).filter(
+                variant=self).count() == 0 and self.voting_id.created_at < timezone.now:
             VoteFact.objects.create(author=user, variant=self)
-        else:
-            pass
 
 
 class VoteFact(models.Model):
@@ -56,10 +55,8 @@ class VoteFact(models.Model):
 
     @staticmethod
     def get_facts_by_user(user):
-        # TODO: сделать
-        pass
+        return VoteFact.objects.filter(author=user)
 
     @staticmethod
     def get_facts_by_variant(variant):
-        # TODO: сделать
-        pass
+        return VoteFact.objects.filter(variant=variant)
