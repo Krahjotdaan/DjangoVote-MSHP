@@ -62,11 +62,7 @@ def make_voting(request):
     return render(request, 'votings/create.html', context=context)
 
 
-def voting_page_template(request):
-    return render(request, 'votings/details_template.html')
-
-
-def votings(request):
+def votings_list_page(request):
     data = models.Voting.objects.all()
     data = list(reversed(data))
     variants = models.VoteVariant.objects.all()
@@ -82,7 +78,7 @@ def votings(request):
                 to_publicate = False
     if answer != 0 and to_publicate:
         models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
-    return render(request, 'voting_page.html', context)
+    return render(request, 'votings/list.html', context)
 
 
 @login_required

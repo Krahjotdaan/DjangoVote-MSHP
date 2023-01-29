@@ -73,13 +73,13 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link"  href="/">На главную</a>
+            <a class="nav-link"  href="{% url 'index' %}">На главную</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"  href="/voting_page">Голосования</a>
+            <a class="nav-link"  href="{% url 'voting_list' %}">Голосования</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="http://127.0.0.1:8000/profile">Профиль</a>
+            <a class="nav-link active" href="{% url 'profile' %}">Профиль</a>
           </li>
             <li class="nav-item">
             {% if user.is_authenticated %}
@@ -103,7 +103,7 @@
     </div>
     <div class="row ">
       <div class="col mt-4">
-        <a href = "/profile/profile_editing" class="btn btn-primary">Редактирование</a>
+        <a href = "{% url 'profile_edit' %}" class="btn btn-primary">Редактирование</a>
       </div>
     </div>
   </div>

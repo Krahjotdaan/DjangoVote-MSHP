@@ -34,7 +34,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
     # votings
-    path('votings/details_template/', views.voting_page_template, name='voting_details'),
     path('votings/create/', views.make_voting, name='voting_create'),
-    path('voting/details/', views.votings, name='voting_details_2'),
+    path('votings/', views.votings_list_page, name='voting_list'),
 ]
