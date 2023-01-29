@@ -37,7 +37,7 @@ class VoteVariant(models.Model):
         # todo: нельзя голосовать, если вы уже проголосовали
         # todo: нельзя голосовать, если voting.created_at находится в будущем относительно текущего момента
         if VoteFact.get_facts_by_user(user).filter(
-                variant=self).count() == 0 and self.voting_id.created_at < timezone.now:
+                variant=self).count() == 0 and self.voting_id.created_at < timezone.now():
             VoteFact.objects.create(author=user, variant=self)
 
 

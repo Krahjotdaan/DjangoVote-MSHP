@@ -1,12 +1,9 @@
-import datetime
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from App import models
-from App.tables_classes.Users import Users
-from App.forms import ProfileEditingForm, VotingForm, VariantForm
 
-from App.forms import MakeVotingForm, ProfileEditingForm
+from App import models
+from App.forms import ProfileEditingForm
+from App.forms import VotingForm
 
 
 def profile_page(request):
@@ -17,8 +14,6 @@ def profile_page(request):
 
 def index(request):
     context = dict()
-    context['message'] = 'Пока пусто'
-
     return render(request, 'index.html', context=context)
 
 
@@ -73,8 +68,7 @@ def make_voting(request):
 
 
 def votings_list_page(request):
-    data = models.Voting.objects.all()
-    data = list(reversed(data))
+    data = models.Voting.objects.all().order_by('-id')
     variants = models.VoteVariant.objects.all()
     context = {
         'data': data,
@@ -89,6 +83,3 @@ def votings_list_page(request):
     if answer != 0 and to_publicate:
         models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
     return render(request, 'votings/list.html', context)
-
-
-
