@@ -1,0 +1,95 @@
+
+body {
+    background-color: #F5F5DC;
+}
+
+.question{
+
+    font-weight: bold;
+}
+.quiz {
+    background-color: white;
+    border-radius: 15px;
+    width: 30%;
+    display: block;
+    font-family: arial;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 200px;
+    max-height: 300px;
+    padding: 10px 10px 0 10px;
+    box-shadow: -7px 5px 3px #6F7066;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.author{
+    font-family: arial;
+    font-size: 12px;
+    margin-left: 10px;
+
+}
+
+.author_ava{
+    display: flex;
+}
+
+.answer_choice{
+    display: flex;
+    font-size: 14px;
+}
+
+.ava {
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    background-color: red;
+    margin-left: 10px;
+}
+.rectangle_1{
+display: flex;
+width: 150px;
+height: 20px;
+margin-left:40px;
+border:1px;
+border-radius:5px;
+background: #66adff;
+
+}
+.rectangle_2{
+display: flex;
+width: 450px;
+height: 20px;
+margin-left:40px;
+margin-right:0px;
+border:1px;
+border-radius:5px;
+background: #66adff;
+
+}
+.rectangle_3{
+display: flex;
+width: 200px;
+height: 20px;
+margin-left:40px;
+border:1px;
+border-radius:5px;
+background: #66adff;
+
+}
+.rectangle_4{
+display: flex;
+width: 300px;
+height: 20px;
+margin-left:40px;
+border:1px;
+border-radius:5px;
+background: #66adff;
+
+}
+.space_between{
+    margin-top: 10px
+}
