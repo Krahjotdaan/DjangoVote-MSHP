@@ -36,5 +36,5 @@ urlpatterns = [
     # votings
     path('votings/details_template/', views.voting_page_template, name='voting_details'),
     path('votings/create/', views.make_voting, name='voting_create'),
-
+    path('voting/details/', views.votings, name='voting_details_2'),
 ]

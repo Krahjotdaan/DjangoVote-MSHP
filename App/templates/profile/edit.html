@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile Editing</title>
+    <title>Django_Voting</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/5.3/examples/navbar-fixed/" rel="stylesheet">
@@ -10,23 +10,35 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Django Vote</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Главная</a>
-        </li>
+    <div class="container-fluid">
+      <a class="navbar-brand">Voting</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/profile">Профиль</a>
-        </li>
-      </ul>
+            <a class="nav-link "  href="{% url 'home' %}">Голосования</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/profile">Профиль</a>
+          </li>
+            <li class="nav-item">
+            {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'logout'%}">Выйти</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'django_registration_register'%}">Зарегистрироваться</a>
+                </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Войти</a>
+            {% endif %}
+          </li>aria-current="page"
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+
+    <!-- nav-bar -->
 
 
 <div class="container">
@@ -40,19 +52,19 @@
   {% csrf_token %}
   <div class="container">
     <div class="row">
-    {{form.name.label}}
+    Текущее {{form.name.label}} - {{user.username}}, введите новое:
   </div>
    <div class="row mt">
       {{form.name}}
   </div>
+<!--   <div class="row mt-2">-->
+<!--      {{form.surname.label}}-->
+<!--  </div>-->
+<!--   <div class="row">-->
+<!--      {{form.surname}}-->
+<!--  </div>-->
    <div class="row mt-2">
-      {{form.surname.label}}
-  </div>
-   <div class="row">
-      {{form.surname}}
-  </div>
-   <div class="row mt-2">
-      {{form.email.label}}
+      Текущий {{form.email.label}} - {{user.email}}, введите новый
   </div>
    <div class="row">
       {{form.email}}

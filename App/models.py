@@ -37,10 +37,11 @@ class VoteVariant(models.Model):
         # todo: нельзя голосовать, если вы уже проголосовали
         # todo: нельзя голосовать, если voting.created_at находится в будущем относительно текущего момента
         # VoteFact.objects.create(author=user, variant=self)
-        if VoteFact.get_facts_by_user(user) == None and Voting.created_at > timezone.now:
-            VoteFact.objects.create(author=user, variant=self, isVoted_flag=True)
-        else:
-            pass
+        # if VoteFact.get_facts_by_user(user) == None and Voting.created_at > timezone.now:
+        #     VoteFact.objects.create(author=user, variant=self, isVoted_flag=True)
+        # else:
+        #     pass
+        pass
 
 
 

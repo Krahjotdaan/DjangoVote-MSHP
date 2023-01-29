@@ -1,95 +1,144 @@
 <!DOCTYPE html>
 <html>
 {% load static %}
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Сайт</title>
-        <meta name="description" content="Интерактивное руководство по началу работы в Brackets.">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;400&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/voting.css' %}">
-    </head>
-    <body>
-        <div class = "quiz">
-            <div class = "top">
-                <div class = "question">Народ, a 12ый пул - норм?</div>
-                <div class = "author_ava">
-                <div class = "author">от NightFenix</div>
-                <div class = "ava"></div>
-                </div>
-            </div>
-            <table class="space_between" style = "width: 90%; height: 80%">
-                <tr>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Django_Voting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@100;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-            <td>
-                <div  class = "answer_choice">
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="answer" id="first_answer">
-                <label class="form-check-label" for="first_answer">
-                Конечно
-                </label>
-                </div>
-                </div>
-            </td>
-            <td align="left">
-            <div  class="rectangle_1"> </div>
-            </td>
+    <link rel="stylesheet" href="{% static 'css/voting.css' %}">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-         </tr>
-               <tr>
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
 
-            <td>
-                <div  class = "answer_choice">
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="answer" id="second_answer">
-                <label class="form-check-label" for="second_answer">
-                Нет, это кринж
-                </label>
-                </div>
-                </div>
-            </td>
-            <td align="left">
-            <div  class="rectangle_2"> </div>
-            </td>
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
 
-         </tr>
-              <tr>
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
 
-            <td>
-                <div  class = "answer_choice">
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="answer" id="third_answer">
-                <label class="form-check-label" for="third_answer">
-                Фотонь
-                </label>
-                </div>
-                </div>
-            </td>
-            <td align="left">
-            <div  class="rectangle_3"> </div>
-            </td>
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
 
-         </tr>
-               <tr>
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
 
-            <td>
-                <div  class = "answer_choice">
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="answer" id="forth_answer">
-                <label class="form-check-label" for="forth_answer">
-                Чел, ты тосс
-                </label>
-                </div>
-                </div>
-            </td>
-            <td align="left">
-            <div  class="rectangle_4" > </div>
-            </td>
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
 
-         </tr>
-         </table>
+
+    <!-- nav-bar -->
+    <link href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">Voting</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+            <a class="nav-link"  href="/">На главную</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active"  href="/voting_page">Голосования</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/profile">Профиль</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/make_voting">Создать голосование</a>
+          </li>
+            <li class="nav-item">
+            {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'logout'%}">Выйти</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'django_registration_register'%}">Зарегистрироваться</a>
+                </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Войти</a>
+            {% endif %}
+          </li>aria-current="page"
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% for i in data %}
+<div class="quiz mt-5">
+    {{ ez }}
+    <div class="top">
+        <h4 class="question">{{i.title}}</h4>
+        <div class="author_ava">
+            <div class="author">от {{ i.author }}</div>
+            <div class="ava"></div>
         </div>
-    </body>
+
+    </div>
+    <h6 class="opacity-75">{{ i.description }}</h6>
+    <table class="space_between" style="width: 90%; height: 80%">
+        {% for variant in variants %}
+            {% if variant.voting_id == i %}
+<!--                <form action="" method="post">-->
+                    <tr>
+                        <td>
+                            <div class="answer_choice">
+                                <div class="form-check">
+                                    <a href="?variant={{variant.id}}">{{ variant.description }}</a>
+                                    {{test}}
+                                </div>
+                            </div>
+                        </td>
+                        <td align="left">
+                            <div class="rectangle_1"></div>
+                        </td>
+
+                    </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+{% endfor %}
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+</body>
 </html>
