@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
@@ -10,22 +11,23 @@
 </div>
 
 <form action="{% url 'profile_edit' %}" method="POST">
-  {% csrf_token %}
-  <div class="container">
-    <div class="row">
-    Текущее {{form.name.label}} - {{user.username}}, введите новое:
-  </div>
-   <div class="row mt">
-      {{form.name}}
-  </div>
-   <div class="row mt-2">
-      Текущий {{form.email.label}} - {{user.email}}, введите новый
-  </div>
-   <div class="row">
-      {{form.email}}
-  </div>
-      <button type="reset" class="btn btn-primary mt-3">Очистить</button>
-      <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
-  </div>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="container">
+        <div class="row">
+            Текущее {{form.name.label}} - {{user.username}}, введите новое:
+        </div>
+        <div class="row mt-4">
+            {{form.name}}
+        </div>
+        <div class="row mt-4">
+            Текущий {{form.email.label}} - {{user.email}}, введите новый
+        </div>
+        <div class="row mt-4">
+          {{form.email}}
+        </div>
+            <button type="reset" class="btn btn-primary mt-3">Очистить</button>
+            <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+    </div>
 </form>
 {% endblock %}
