@@ -28,7 +28,7 @@ def profile_editing(request):
             email = form.data['email']
             request.user.username = name
             request.user.email = email
-            # todo сделать чтобы изменялся весь пользователь
+            request.user.save()
         else:
             context['form'] = form
 
