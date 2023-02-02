@@ -9,10 +9,8 @@
       <h1>Редактирование профиля</h1>
     </div>
 </div>
-
 <form action="{% url 'profile_edit' %}" method="POST">
     {% csrf_token %}
-    {{ form|crispy }}
     <div class="container">
         <div class="row">
             Текущее {{form.name.label}} - {{user.username}}, введите новое:
