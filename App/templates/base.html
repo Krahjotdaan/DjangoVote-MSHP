@@ -57,6 +57,12 @@
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
           }
+           hr {
+            border: none; /* Убираем границу для браузера Firefox */
+            color: gray; /* Цвет линии для остальных браузеров */
+            background-color: gray; /* Цвет линии для браузера Firefox и Opera */
+            height: 2px; /* Толщина линии */
+           }
     </style>
 
     {% block base_css %}
@@ -77,8 +83,9 @@
 </div>
 
 
-<footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">© 2001-2023 МШП</p>
+<footer class="my-4 pt-5 text-muted text-center text-small">
+    <hr>
+    <p class="mb-1">© Дачные кодеры</p>
 </footer>
 
 {% block base_js %}
