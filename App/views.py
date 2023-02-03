@@ -74,6 +74,14 @@ def votings_list_page(request):
         'data': data,
         'variants': variants,
     }
+    ids = []
+    two_var = []
+    for i in variants:
+        ids.append(i.voting_id)
+    for i in ids:
+        if ids.count(i) == 2:
+            two_var.append(i)
+    context["voting_with_2_var"] = two_var
     answer = request.GET.get('variant', 0)
     to_publicate = True
     if answer != 0:
@@ -82,4 +90,5 @@ def votings_list_page(request):
                 to_publicate = False
     if answer != 0 and to_publicate:
         models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
+
     return render(request, 'votings/list.html', context)
