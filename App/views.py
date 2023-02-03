@@ -5,7 +5,7 @@ from App import models
 from App.forms import ProfileEditingForm
 from App.forms import VotingForm
 
-
+@login_required
 def profile_page(request):
     context = dict()
     context['title'] = 'Настройки профиля'
@@ -16,7 +16,7 @@ def index(request):
     context = dict()
     return render(request, 'index.html', context=context)
 
-
+@login_required
 def profile_editing(request):
     context = dict()
 
@@ -66,7 +66,7 @@ def make_voting(request):
     context['form'] = VotingForm()
     return render(request, 'votings/create.html', context)
 
-
+@login_required
 def votings_list_page(request):
     data = models.Voting.objects.all().order_by('-id')
     variants = models.VoteVariant.objects.all()
