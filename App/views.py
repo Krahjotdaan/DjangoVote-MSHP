@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from App import models
 from App.forms import ProfileEditingForm
-from App.forms import VotingForm
+from App.forms import VotingForm2Variants
 
 
 def profile_page(request):
@@ -44,26 +44,29 @@ def profile_editing(request):
 def make_voting(request):
     context = dict()
     context['userita'] = request.user.id
-    context['test'] = 'asdf'
-
+    # varsa = request.GET.get('vars')
+    # context['test'] = varsa
     if request.method == 'POST':
-        form = VotingForm(request.POST)
+
+        form = VotingForm2Variants(request.POST)
 
         if form.is_valid():
             title = form.data['title']
-            variants = form.data['variants']
+            variant1 = form.data['variant1']
+            variant2 = form.data['variant2']
             desc = form.data['description']
 
             item = models.Voting(title=title, description=desc, author=request.user)
             item.save()
-            models.VoteVariant.objects.create(description=variants, voting_id=item)
+            models.VoteVariant.objects.create(description=variant1, voting_id=item)
+            models.VoteVariant.objects.create(description=variant2, voting_id=item)
         else:
             context['form'] = form
 
     else:
         context['nothing_entered'] = True
-        context['form'] = VotingForm()
-    context['form'] = VotingForm()
+        context['form'] = VotingForm2Variants()
+    context['form'] = VotingForm2Variants()
     return render(request, 'votings/create.html', context)
 
 
