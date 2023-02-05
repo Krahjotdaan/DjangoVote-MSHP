@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from App import models
 from App.forms import ProfileEditingForm
-from App.forms import VotingForm
+from App.forms import VotingForm2Variants, VotingForm3Variants, VotingForm4Variants
 
 
 def profile_page(request):
@@ -28,7 +28,7 @@ def profile_editing(request):
             email = form.data['email']
             request.user.username = name
             request.user.email = email
-            # todo сделать чтобы изменялся весь пользователь
+            request.user.save()
         else:
             context['form'] = form
 
@@ -44,26 +44,65 @@ def profile_editing(request):
 def make_voting(request):
     context = dict()
     context['userita'] = request.user.id
-    context['test'] = 'asdf'
-
+    varsa = request.GET.get('vars', 2)
+    context['test'] = varsa
+    if type(varsa) == 'NoneType':
+        varsa = 2
+    varsa = int(varsa)
     if request.method == 'POST':
-        form = VotingForm(request.POST)
-
+        if varsa == 2:
+            form = VotingForm2Variants(request.POST)
+        if varsa == 3:
+            form = VotingForm3Variants(request.POST)
+        if varsa == 4:
+            form = VotingForm4Variants(request.POST)
         if form.is_valid():
             title = form.data['title']
-            variants = form.data['variants']
             desc = form.data['description']
 
             item = models.Voting(title=title, description=desc, author=request.user)
             item.save()
-            models.VoteVariant.objects.create(description=variants, voting_id=item)
+
+            if varsa == 2:
+                variant1 = form.data['variant1']
+                variant2 = form.data['variant2']
+                models.VoteVariant.objects.create(description=variant1, voting_id=item)
+                models.VoteVariant.objects.create(description=variant2, voting_id=item)
+            if varsa == 3:
+                variant1 = form.data['variant1']
+                variant2 = form.data['variant2']
+                variant3 = form.data['variant3']
+                models.VoteVariant.objects.create(description=variant1, voting_id=item)
+                models.VoteVariant.objects.create(description=variant2, voting_id=item)
+                models.VoteVariant.objects.create(description=variant3, voting_id=item)
+            if varsa == 4:
+                variant1 = form.data['variant1']
+                variant2 = form.data['variant2']
+                variant3 = form.data['variant3']
+                variant4 = form.data['variant4']
+                models.VoteVariant.objects.create(description=variant1, voting_id=item)
+                models.VoteVariant.objects.create(description=variant2, voting_id=item)
+                models.VoteVariant.objects.create(description=variant3, voting_id=item)
+                models.VoteVariant.objects.create(description=variant4, voting_id=item)
         else:
             context['form'] = form
 
     else:
         context['nothing_entered'] = True
-        context['form'] = VotingForm()
-    context['form'] = VotingForm()
+         # = VotingForm2Variants()
+        # context['form'] = VotingForm2Variants()
+        if varsa == 2:
+            context['form'] = VotingForm2Variants()
+        if varsa == 3:
+            context['form'] = VotingForm3Variants()
+        if varsa == 4:
+            context['form'] = VotingForm4Variants()
+    if varsa == 2:
+        context['form'] = VotingForm2Variants()
+    if varsa == 3:
+        context['form'] = VotingForm3Variants()
+    if varsa == 4:
+        context['form'] = VotingForm4Variants()
     return render(request, 'votings/create.html', context)
 
 
@@ -74,6 +113,14 @@ def votings_list_page(request):
         'data': data,
         'variants': variants,
     }
+    ids = []
+    two_var = []
+    for i in variants:
+        ids.append(i.voting_id)
+    for i in ids:
+        if ids.count(i) == 2:
+            two_var.append(i)
+    context["voting_with_2_var"] = two_var
     answer = request.GET.get('variant', 0)
     to_publicate = True
     if answer != 0:
@@ -82,4 +129,5 @@ def votings_list_page(request):
                 to_publicate = False
     if answer != 0 and to_publicate:
         models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
+
     return render(request, 'votings/list.html', context)

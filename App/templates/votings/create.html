@@ -15,10 +15,17 @@
     <!-- nav-bar -->
     <div class="mt-5 p-3">
         <h1>Создание голосования</h1>
+        <div class="mt-3 mb-3">
+            <a href="/votings/create">2 варианта ответа</a> |
+            <a href="?vars=3">3 варианта ответа</a> |
+            <a href="?vars=4">4 варианта ответа</a>
+        </div>
+
 
   <form action="" method="post">
-      {% csrf_token %} 
-      {{form|crispy}}
+      {% csrf_token %}
+      {% load crispy_forms_tags %}
+      {{ form|crispy }}
 
       <input class="btn btn-primary" type="submit" value="создать">
   </form>
