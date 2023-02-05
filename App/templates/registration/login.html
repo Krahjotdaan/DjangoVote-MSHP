@@ -8,9 +8,10 @@
     {% include 'view_head.html' %}
 </head>
 
-
 <body>
     {% include 'view_body.html' %}
+    {% load crispy_forms_tags %}
+    {% block content %}
 
 <!-- nav-bar -->
     <form method="post">
