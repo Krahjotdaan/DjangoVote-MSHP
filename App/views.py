@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from App import models
 from App.forms import ProfileEditingForm
-from App.forms import VotingForm2Variants
+from App.forms import VotingForm2Variants, VotingForm3Variants, VotingForm4Variants
 
 
 def profile_page(request):
@@ -44,29 +44,65 @@ def profile_editing(request):
 def make_voting(request):
     context = dict()
     context['userita'] = request.user.id
-    # varsa = request.GET.get('vars')
-    # context['test'] = varsa
+    varsa = request.GET.get('vars', 2)
+    context['test'] = varsa
+    if type(varsa) == 'NoneType':
+        varsa = 2
+    varsa = int(varsa)
     if request.method == 'POST':
-
-        form = VotingForm2Variants(request.POST)
-
+        if varsa == 2:
+            form = VotingForm2Variants(request.POST)
+        if varsa == 3:
+            form = VotingForm3Variants(request.POST)
+        if varsa == 4:
+            form = VotingForm4Variants(request.POST)
         if form.is_valid():
             title = form.data['title']
-            variant1 = form.data['variant1']
-            variant2 = form.data['variant2']
             desc = form.data['description']
 
             item = models.Voting(title=title, description=desc, author=request.user)
             item.save()
-            models.VoteVariant.objects.create(description=variant1, voting_id=item)
-            models.VoteVariant.objects.create(description=variant2, voting_id=item)
+
+            if varsa == 2:
+                variant1 = form.data['variant1']
+                variant2 = form.data['variant2']
+                models.VoteVariant.objects.create(description=variant1, voting_id=item)
+                models.VoteVariant.objects.create(description=variant2, voting_id=item)
+            if varsa == 3:
+                variant1 = form.data['variant1']
+                variant2 = form.data['variant2']
+                variant3 = form.data['variant3']
+                models.VoteVariant.objects.create(description=variant1, voting_id=item)
+                models.VoteVariant.objects.create(description=variant2, voting_id=item)
+                models.VoteVariant.objects.create(description=variant3, voting_id=item)
+            if varsa == 4:
+                variant1 = form.data['variant1']
+                variant2 = form.data['variant2']
+                variant3 = form.data['variant3']
+                variant4 = form.data['variant4']
+                models.VoteVariant.objects.create(description=variant1, voting_id=item)
+                models.VoteVariant.objects.create(description=variant2, voting_id=item)
+                models.VoteVariant.objects.create(description=variant3, voting_id=item)
+                models.VoteVariant.objects.create(description=variant4, voting_id=item)
         else:
             context['form'] = form
 
     else:
         context['nothing_entered'] = True
+         # = VotingForm2Variants()
+        # context['form'] = VotingForm2Variants()
+        if varsa == 2:
+            context['form'] = VotingForm2Variants()
+        if varsa == 3:
+            context['form'] = VotingForm3Variants()
+        if varsa == 4:
+            context['form'] = VotingForm4Variants()
+    if varsa == 2:
         context['form'] = VotingForm2Variants()
-    context['form'] = VotingForm2Variants()
+    if varsa == 3:
+        context['form'] = VotingForm3Variants()
+    if varsa == 4:
+        context['form'] = VotingForm4Variants()
     return render(request, 'votings/create.html', context)
 
 
