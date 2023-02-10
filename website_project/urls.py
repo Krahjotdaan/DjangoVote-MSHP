@@ -29,6 +29,10 @@ urlpatterns = [
     path('profile/', views.profile_page, name='profile'),
     path('profile/edit/', views.profile_editing, name='profile_edit'),
 
+    # avatar
+    path('avatar/', views.avatar_page, name='avatar'),
+    path('avatar/edit/', views.avatar_editing, name='avatar_edit'),
+
     # login and signin
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),

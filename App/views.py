@@ -131,3 +131,13 @@ def votings_list_page(request):
         models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
 
     return render(request, 'votings/list.html', context)
+
+@login_required
+def avatar_page(request):
+    context = dict()
+    return render(request, 'avatar/index.html', context)
+
+@login_required
+def avatar_editing(request):
+    context = dict()
+    return render(request, 'avatar/edit.html', context)
