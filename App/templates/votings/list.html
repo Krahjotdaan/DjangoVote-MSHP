@@ -2,7 +2,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
-
 {% block content %}
 <html>
 <head>
@@ -91,26 +90,38 @@
     </div>
     <h6 class="opacity-75">{{ i.description }}</h6>
     <table class="space_between" style="width: 90%; height: 80%">
-        {% for variant in variants %}
+       <tr>
+           {% for variant in variants %}
             {% if variant.voting_id == i %}
 <!--                <form action="" method="post">-->
-                    <tr>
+        {% if variant.voting_id in voting_with_2_var %}
+
+                        <td style="text-align: center; padding-top:32px">
+                                <div class="form-check">
+<div  class="btn-group" role="group" aria-label="Basic example">
+  <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
+</div>
+  </div>
+                                    {{test}}
+                        </td>
+        {% else %}
+                <tr>
                         <td>
-                            <div class="answer_choice">
-                                <div class="form-check"
+                                <div class="form-check">
 <div class="btn-group" role="group" aria-label="Basic example">
   <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
 </div>
                                     {{test}}
                                 </div>
-                            </div>
                         </td>
                         <td align="left">
                             <div class="rectangle_1"></div>
                         </td>
+        </tr>
 
-                    </tr>
-            {% endif %}
+        {% endif %}
+
+        {% endif %}
         {% endfor %}
     </table>
 </div>
