@@ -1,15 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="wrapper p-3 mt-5">
-  <div class="">
-    Имя пользователя: {{ user.username }} <br>
-    E-mail пользователя: {{ user.email }}
-  </div>
-  <div class="row ">
-    <div class="col mt-4">
-      <a href = "{% url 'profile_edit' %}" class="btn btn-primary">Редактирование</a>
+<h1>.</h1>
+<div class="container">
+  <div class="row"> </div>
+    <div align="center" class="row mt-4 mb-3">
+      <h1>Профиль</h1>
+    </div>
+</div>
+  <div class="container">
+    <div class="row"> </div>
+    <div align="center" class="row mt-4 mb-3">
+      <p>Имя пользователя: {{ user.username }}</p>
+      <p>E-mail пользователя: {{ user.email }}</p>
     </div>
   </div>
+
+<div class="container">
+    <div class="row ">
+    <div class="col mt-4" align="center">
+      <a href = "{% url 'profile_edit' %}" class="btn btn-primary"  >Редактирование</a>
+    </div>
+  </div>
+  </div>
+
 </div>
 {% endblock %}
