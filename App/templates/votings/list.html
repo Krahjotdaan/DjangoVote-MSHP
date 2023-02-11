@@ -70,7 +70,7 @@
         background: #ddd;
       }
     </style>
-
+      <h1 class="mt-5 p-3">Страница голосований</h1>
 
     <!-- nav-bar -->
     <link href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
@@ -84,7 +84,19 @@
     <div class="mt-5">{{ test }}</div>
 
 {% for i in votings %}
+    {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+    {% endif %}
+
+
+{% for i in data %}
 <div class="quiz mt-4">
+    {{ ez }}
     <div class="top">
         <h4 class="question">{{i.title}}</h4>
         <div class="author_ava">
@@ -101,10 +113,11 @@
                     <tr>
                         <td>
                             <div class="answer_choice">
-                                <div class="form-check"
+                                <div class="form-check">
 <div class="btn-group" role="group" aria-label="Basic example">
   <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
 </div>
+                                    {{test}}
                                 </div>
                             </div>
                         </td>

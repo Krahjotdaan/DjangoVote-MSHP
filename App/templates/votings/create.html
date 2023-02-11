@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
     <div class="mt-5 p-3">
         <h1>Создание голосования</h1>
 
@@ -19,6 +20,15 @@
             <a href="?vars=3">3 варианта ответа</a> |
             <a href="?vars=4">4 варианта ответа</a>
         </div>
+
+        {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+        {% endif %}
 
         <form action="" method="post">
             {% csrf_token %}
