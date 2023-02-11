@@ -11,8 +11,10 @@ from App.forms import VotingForm2Variants, VotingForm3Variants, VotingForm4Varia
 
 @login_required
 def profile_page(request):
-    context = dict()
-    context['title'] = 'Настройки профиля'
+    context = {
+        "title": "Настройки профиля",
+        "uservotings": models.Voting.objects.all()
+    }
     return render(request, 'profile/index.html', context)
 
 
