@@ -161,10 +161,10 @@ def votings_list_page(request):
 
     # ↓↓↓ проверка на повторный отзыв ↓↓↓
     to_publicate = True
-
-    if answer != 0:
-        for i in models.VoteFact.get_facts_by_user(request.user):
-            if models.VoteVariant.objects.filter(id=answer)[0].voting_id == i.variant.voting_id:
+    #
+    # if answer != 0:
+    #     for i in models.VoteFact.get_facts_by_user(request.user):
+    #         if models.VoteVariant.objects.filter(id=answer)[0].voting_id == i.variant.voting_id:
     if(get_variant != 0):
         get_variant = models.VoteVariant.objects.filter(id=get_variant)[0] # меняю айди варианта на объект варианта
         for i in facts: # пробегаюсь по всем голосам юзера и проверяю относится ли один из них к голосованию текущего варианта
@@ -172,13 +172,14 @@ def votings_list_page(request):
                 to_publicate = False
                 messages.warning(request, 'Нельзя голосовать дважды')
                 break
-    if answer != 0 and to_publicate is True:
-        models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
-        messages.success(request, 'Вы успешно проголосовали')
+    # if answer != 0 and to_publicate is True:
+    #     models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
+    #     messages.success(request, 'Вы успешно проголосовали')
 
         if to_publicate: # если все в порядке, публикую
             # models.VotedVoting.objects.create(author=request.user, voting=get_variant.voting_id) # создаю VotedVoting
             models.VoteFact.objects.create(author=request.user, variant=get_variant) # создаю VoteFact
+            messages.success(request, 'Вы успешно проголосовали')
     context['to_publicate'] = to_publicate
 
 
