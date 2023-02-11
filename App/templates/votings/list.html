@@ -66,6 +66,9 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+      .voted {
+        background: #ddd;
+      }
     </style>
 
 
@@ -78,9 +81,10 @@
     {% include 'navbar.html' %}
 
 <h1>.</h1>
-{% for i in data %}
+    <div class="mt-5">{{ test }}</div>
+
+{% for i in votings %}
 <div class="quiz mt-4">
-    {{ ez }}
     <div class="top">
         <h4 class="question">{{i.title}}</h4>
         <div class="author_ava">
@@ -101,7 +105,6 @@
 <div class="btn-group" role="group" aria-label="Basic example">
   <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
 </div>
-                                    {{test}}
                                 </div>
                             </div>
                         </td>
