@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Django_Voting</title>
+{% extends 'base.html' %}
 
-    {% include 'view_head.html' %}
-
-</head>
-<body>
-
-{% include 'navbar.html' %}
-
+{% block content %}
 <h3 class="mt-5 p-3">Спасибо за регистрацию!</h3>
 <p class="p-3">Вы успешно зарегистрировали свой аккаунт. Перейдите в раздел "Голосования", чтобы вернуться на главную страницу.</p>
 <p class="p-3">С уважением, администрация сайта.</p>
 
-</body>
-</html>
+{% endblock %}

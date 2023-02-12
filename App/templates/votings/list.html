@@ -2,7 +2,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
-
 {% block content %}
 <html>
 <head>
@@ -78,7 +77,7 @@
     {% include 'navbar.html' %}
 
 <h1>.</h1>
-{% for i in data %}
+{% for i in votings %}
 <div class="quiz mt-4">
     {{ ez }}
     <div class="top">
@@ -114,7 +113,6 @@
 </div>
                                     {{test}}
                                 </div>
-                            </div>
                         </td>
                         <td align="left">
                             <div class="rectangle_1"></div>
