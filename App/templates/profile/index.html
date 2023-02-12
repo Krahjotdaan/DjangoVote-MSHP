@@ -1,28 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>.</h1>
-<div class="container">
-  <div class="row"> </div>
-    <div align="center" class="row mt-4 mb-3">
-      <h1>Профиль</h1>
-    </div>
+<div class="wrapper p-3 mt-5">
+<div class="card border-transparent bg-transparent mt-5 mb-3" style="max-width: 180rem;">
+  <div class="card-body text-dark">
+      <h2 class="card-title">Ваше имя: {{ user.username }}</h2> <br>
+      <h2>Ваш E-MAIL: {{ user.email }}</h2>
+  </div>
+<div class="card-footer bg-transparent d-grid gap-2 border-transparent text-center "><a href="{% url 'profile_edit' %}" class="btn btn-primary">Редактирование</a></div>
+
 </div>
-  <div class="container">
-    <div class="row"> </div>
-    <div align="center" class="row mt-4 mb-3">
-      <p>Имя пользователя: {{ user.username }}</p>
-      <p>E-mail пользователя: {{ user.email }}</p>
-    </div>
-  </div>
+    <h2 class="mt-5 mb-5">Вы участвовали в следующих голосованиях:</h2>
+    <div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for i in uservotings %}
+            {% if i.author_id == user.id %}
+            <div class="col">
+                <div class="card border-transparent bg-transparent mb-3" style="max-width: 30rem;">
+                  <div class="card-header"><h3>{{ i.title }}</h3><small class="text-muted">{{ i.created_at }}</small></div>
+                    <div class="card-body">
+                        <h4 class="card-title text-muted">{{ i.description }}</h4>
 
-<div class="container">
-    <div class="row ">
-    <div class="col mt-4" align="center">
-      <a href = "{% url 'profile_edit' %}" class="btn btn-primary"  >Редактирование</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
     </div>
-  </div>
-  </div>
-
 </div>
 {% endblock %}

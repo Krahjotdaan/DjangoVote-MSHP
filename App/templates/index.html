@@ -3,18 +3,36 @@
 {% block content %}
 
     <!-- отображение пользователя на главной странице -->
+
     {% if user.is_authenticated %}
-    <h1>.</h1>
-    <h1 class="mt-4 mb-3">Привет, <b>{{ user.username }}</b>!</h1>
+
+    <h1 class="mt-5 p-3">Привет!</h1>
+        {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+        {% endif %}
 <img src="https://s9.gifyu.com/images/2_5382173967027022522-1.gif" alt="pacman">
+
     <div class="mt-4">
         <h5>Перед тобой сайт-голосование.</h5>
         <h5>После регистрации ты сможешь создавать голосования и голосовать</h5>
         <h5>Если вдруг сайт упал после регистации, это нормально,</h5>
-        <h5>просто нажми стрелку назад и войди в зарегестрированный аккаунт</h5>
+        <h5>просто нажми стрелку назад и войди в зарегистрированный аккаунт</h5>
     </div>
     {% else %}
-    <h1 class="mt-5 p-3">Привет, пользователь</h1>
+    <h1 class="mt-5 p-3">Привет!</h1>
+        {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+        {% endif %}
     <img src="https://s9.gifyu.com/images/2_5382173967027022522-1.gif" alt="pacman">
     <div class="mt-4">
         <h5>Перед тобой сайт-голосование.</h5>
