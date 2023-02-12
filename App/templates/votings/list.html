@@ -66,11 +66,8 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
-      .voted {
-        background: #ddd;
-      }
     </style>
-      <h1 class="mt-5 p-3 text-center">Страница голосований</h1>
+
 
     <!-- nav-bar -->
     <link href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
@@ -78,24 +75,10 @@
 
 
 <body>
-{% include 'navbar.html' %}
+    {% include 'navbar.html' %}
 
-<!--<h1>.</h1>-->
-    <div class="mt-5">{{ test }}</div>
-
-{% for i in votings %}
-    {% if messages %}
-                {% for message in messages %}
-                    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-    {% endif %}
-{% endfor %}
-
-
-{% for i in votings %}
+<h1>.</h1>
+{% for i in data %}
 <div class="quiz mt-4">
     {{ ez }}
     <div class="top">
@@ -108,12 +91,23 @@
     </div>
     <h6 class="opacity-75">{{ i.description }}</h6>
     <table class="space_between" style="width: 90%; height: 80%">
-        {% for variant in variants %}
+       <tr>
+           {% for variant in variants %}
             {% if variant.voting_id == i %}
 <!--                <form action="" method="post">-->
-                    <tr>
+        {% if variant.voting_id in voting_with_2_var %}
+
+                        <td style="text-align: center; padding-top:32px">
+                                <div class="form-check">
+<div  class="btn-group" role="group" aria-label="Basic example">
+  <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
+</div>
+  </div>
+                                    {{test}}
+                        </td>
+        {% else %}
+                <tr>
                         <td>
-                            <div class="answer_choice">
                                 <div class="form-check">
 <div class="btn-group" role="group" aria-label="Basic example">
   <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
@@ -125,11 +119,13 @@
                         <td align="left">
                             <div class="rectangle_1"></div>
                         </td>
+        </tr>
 
-</tr>
-{% endif %}
-{% endfor %}
-</table>
+        {% endif %}
+
+        {% endif %}
+        {% endfor %}
+    </table>
 </div>
 {% endfor %}
 </body>
