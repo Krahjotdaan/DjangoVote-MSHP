@@ -65,6 +65,13 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+
+      .wrapper{
+        display: grid;
+        grid-gap: 50px;
+        grid-template-columns: repeat(2, 650px);
+      }
+
     </style>
 
 
@@ -77,55 +84,65 @@
     {% include 'navbar.html' %}
 
 <h1>.</h1>
-{% for i in votings %}
-<div class="quiz mt-4">
-    {{ ez }}
-    <div class="top">
-        <h4 class="question">{{i.title}}</h4>
-        <div class="author_ava">
-            <div class="author">от {{ i.author }}</div>
-            <div class="ava"></div>
-        </div>
 
-    </div>
-    <h6 class="opacity-75">{{ i.description }}</h6>
-    <table class="space_between" style="width: 90%; height: 80%">
-       <tr>
-           {% for variant in variants %}
-            {% if variant.voting_id == i %}
-<!--                <form action="" method="post">-->
-        {% if variant.voting_id in voting_with_2_var %}
 
-                        <td style="text-align: center; padding-top:32px">
-                                <div class="form-check">
-<div  class="btn-group" role="group" aria-label="Basic example">
-  <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
-</div>
-  </div>
-                                    {{test}}
-                        </td>
-        {% else %}
-                <tr>
-                        <td>
-                                <div class="form-check">
-<div class="btn-group" role="group" aria-label="Basic example">
-  <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
-</div>
-                                    {{test}}
-                                </div>
-                        </td>
-                        <td align="left">
-                            <div class="rectangle_1"></div>
-                        </td>
-        </tr>
+            <div class="wrapper">
+                {% for i in votings %}
+                    <div class="quiz mt-4">
+                        {{ ez }}
+                        <div class="top">
+                            <h4 class="question">{{i.title}}</h4>
+                            <div class="author_ava">
+                                <div class="author">от {{ i.author }}</div>
+                                <div class="ava"></div>
+                            </div>
 
-        {% endif %}
+                        </div>
+                        <h6 class="opacity-90">{{ i.description }}</h6>
+                        <table class="space_between" style="width: 90%; height: 70%">
+                           <tr>
+                               {% for variant in variants %}
+                                    {% if variant.voting_id == i %}
+                                        {% if variant.voting_id in voting_with_2_var %}
+                                                <td style="text-align: center; padding-top:32px">
+                                                <div class="form-check">
+                                                    <div  class="btn-group" role="group" aria-label="Basic example">
+                                                        <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
+                                                    </div>
+                                                </div>
+                                                    {{test}}
+                                                </td>
+                                        {% else %}
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                      <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
+                                                    </div>
+                                                    {{test}}
+                                                </div>
+                                            </td>
+                                                <td align="left">
+                                                    <div class="rectangle_1"></div>
+                                                </td>
+                                        </tr>
 
-        {% endif %}
-        {% endfor %}
-    </table>
-</div>
-{% endfor %}
+                                        {% endif %}
+
+                                    {% endif %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+
+
+
+
+
 </body>
 </html>
 {% endblock %}

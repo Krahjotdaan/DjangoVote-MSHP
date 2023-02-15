@@ -10,7 +10,7 @@ body {
 .quiz {
     background-color: white;
     border-radius: 15px;
-    width: 30%;
+    width: 100%;
     display: block;
     font-family: arial;
     margin-left: auto;
