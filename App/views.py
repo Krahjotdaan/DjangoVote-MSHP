@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render
-
+from django.contrib.auth.models import User
 from App import models
 from App.forms import ProfileEditingForm
 from App.forms import VotingForm2Variants, VotingForm3Variants, VotingForm4Variants
@@ -146,9 +146,8 @@ def votings_list_page(request):
         'voted_voting': models.VotedVoting.objects.all(),
     }
 
-
-    ids = []
-    two_var = []
+    ids = []  # id всех вариантов ответов
+    two_var = [] # id вариантов ответов ( добавить если в голосовании их только два)
     for i in variants:
         ids.append(i.voting_id)
     for i in ids:
