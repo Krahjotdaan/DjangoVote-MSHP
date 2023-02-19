@@ -124,6 +124,8 @@ def make_voting(request):
 
 @login_required
 def votings_list_page(request):
+    if request.user.username is not None:
+        messages.success(request, "Вы успешно вошли в аккаунт")
     votings = models.Voting.objects.all().order_by('-id')
     variants = models.VoteVariant.objects.all()
     votings_voted = [False] * len(votings)
