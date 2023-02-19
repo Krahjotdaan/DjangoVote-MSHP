@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # index
-    path('', views.index, name='index'),
+    path('', views.votings_list_page, name='index'),
 
     # profile
     path('profile/', views.profile_page, name='profile'),
@@ -35,5 +35,5 @@ urlpatterns = [
 
     # votings
     path('votings/create/', views.make_voting, name='voting_create'),
-    path('votings/', views.votings_list_page, name='voting_list'),
+    path('aboutus/', views.index, name='about_us'),
 ]
