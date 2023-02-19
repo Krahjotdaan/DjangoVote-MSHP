@@ -3,6 +3,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    {% if user.is_authenticated is False %}
+            <div class="alert INFO alert-dismissible fade show" role="alert">
+                    Вы вышли из аккаунта
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    {% endif %}
 <form method="post">
         <div class="row mt-5">
             <div class="col  mt-4">

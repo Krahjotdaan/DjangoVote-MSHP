@@ -85,12 +85,21 @@
 <body>
 {% include 'navbar.html' %}
 
-<h1>.</h1>
+<h1 class="mt-5 p-3">Страница голосований</h1>
+
+        {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+        {% endif %}
 
 
             <div class="wrapper">
                 {% for i in votings %}
-                    <div class="quiz mt-4">
+                    <div class="quiz mt-3">
                         {{ ez }}
                         <div class="top">
                             <h4 class="question">{{i.title}}</h4>
@@ -137,13 +146,6 @@
                     </div>
                 {% endfor %}
             </div>
-
-
-
-
-
-
-
 
 </body>
 </html>
