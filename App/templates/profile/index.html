@@ -17,9 +17,9 @@
             {% if i.author_id == user.id %}
             <div class="col">
                 <div class="card border-transparent bg-transparent mb-3" style="max-width: 30rem;">
-                  <div class="card-header"><h3>{{ i.title }}</h3><small class="text-muted">{{ i.created_at }}</small></div>
+                  <div class="card-header"><h3>{{ i.variant.voting_id.title }}</h3><small class="text-muted">{{ i.variant.voting_id.created_at }}</small></div>
                     <div class="card-body">
-                        <h4 class="card-title text-muted">{{ i.description }}</h4>
+                        <h4 class="card-title text-muted">{{ i.variant.voting_id.description }}</h4>
 
                     </div>
                 </div>

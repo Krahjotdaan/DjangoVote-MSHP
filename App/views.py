@@ -13,7 +13,7 @@ from App.forms import VotingForm2Variants, VotingForm3Variants, VotingForm4Varia
 def profile_page(request):
     context = {
         "title": "Настройки профиля",
-        "uservotings": models.Voting.objects.all()
+        "uservotings": models.VoteFact.get_facts_by_user(request.user)
     }
     return render(request, 'profile/index.html', context)
 
