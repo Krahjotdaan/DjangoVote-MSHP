@@ -2,6 +2,18 @@
 
 {% block content %}
 
+<style>
+    h1 {
+    text-align: center;
+    }
+    .image {
+    margin-left: 275px;
+    }
+    .mt-4{
+    text-align: center;
+    }
+</style>
+
     <!-- отображение пользователя на главной странице -->
 
     {% if user.is_authenticated %}
@@ -15,8 +27,9 @@
                     </div>
                 {% endfor %}
         {% endif %}
+<div class = "image">
 <img src="https://s9.gifyu.com/images/2_5382173967027022522-1.gif" alt="pacman">
-
+</div>
     <div class="mt-4">
         <h2>Кто мы</h2>
         <h5>Мы команда школы программистов, состоящая из 14 человек.</h5>
