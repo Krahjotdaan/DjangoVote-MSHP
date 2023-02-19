@@ -62,3 +62,11 @@ class VoteFact(models.Model):
     @staticmethod
     def get_facts_by_variant(variant):
         return VoteFact.objects.filter(variant=variant)
+
+
+class VotedVoting(models.Model):
+    """
+    Таблица для обозначения проголосованных голосований
+    """
+    author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)
+    voting = models.ForeignKey(to=Voting, on_delete=models.CASCADE)

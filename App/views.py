@@ -12,6 +12,7 @@ from App.forms import VotingForm2Variants, VotingForm3Variants, VotingForm4Varia
 def profile_page(request):
     context = dict()
     context['title'] = 'Настройки профиля'
+    context['uservotings'] = models.VotedVoting.objects.all()
     return render(request, 'profile/index.html', context)
 
 
