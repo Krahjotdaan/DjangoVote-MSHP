@@ -1,9 +1,12 @@
+from django.contrib import messages
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render
-
 from App import models
 from App.forms import ProfileEditingForm
 from App.forms import VotingForm2Variants, VotingForm3Variants, VotingForm4Variants
+
 
 @login_required
 def profile_page(request):
@@ -14,7 +17,13 @@ def profile_page(request):
 
 def index(request):
     context = dict()
+    if request.user.username == "":
+        messages.info(request, 'Вы вышли из аккаунта')
+    else:
+        messages.success(request, 'Вы успешно вошли в аккаунт')
+
     return render(request, 'index.html', context=context)
+
 
 @login_required
 def profile_editing(request):
@@ -23,18 +32,21 @@ def profile_editing(request):
     if request.method == 'POST':
         form = ProfileEditingForm(request.POST)
 
-        if form.is_valid():
+        if form.is_valid() and (request.user.username != form.data['name'] or request.user.email != form.data['email']):
             name = form.data['name']
             email = form.data['email']
             request.user.username = name
             request.user.email = email
             request.user.save()
+            messages.success(request, 'Профиль успешно изменен')
         else:
             context['form'] = form
+            messages.warning(request, 'Нет изменений')
 
     else:
         context['nothing_entered'] = True
         context['form'] = ProfileEditingForm()
+
     context['form'] = ProfileEditingForm()
 
     return render(request, 'profile/edit.html', context=context)
@@ -46,9 +58,12 @@ def make_voting(request):
     context['userita'] = request.user.id
     varsa = request.GET.get('vars', 2)
     context['test'] = varsa
+    form = None
+
     if type(varsa) == 'NoneType':
         varsa = 2
     varsa = int(varsa)
+
     if request.method == 'POST':
         if varsa == 2:
             form = VotingForm2Variants(request.POST)
@@ -56,6 +71,7 @@ def make_voting(request):
             form = VotingForm3Variants(request.POST)
         if varsa == 4:
             form = VotingForm4Variants(request.POST)
+
         if form.is_valid():
             title = form.data['title']
             desc = form.data['description']
@@ -84,12 +100,15 @@ def make_voting(request):
                 models.VoteVariant.objects.create(description=variant2, voting_id=item)
                 models.VoteVariant.objects.create(description=variant3, voting_id=item)
                 models.VoteVariant.objects.create(description=variant4, voting_id=item)
+
+            messages.success(request, 'Голосование успешно создано')
+
         else:
             context['form'] = form
 
     else:
         context['nothing_entered'] = True
-         # = VotingForm2Variants()
+        # = VotingForm2Variants()
         # context['form'] = VotingForm2Variants()
         if varsa == 2:
             context['form'] = VotingForm2Variants()
@@ -97,13 +116,16 @@ def make_voting(request):
             context['form'] = VotingForm3Variants()
         if varsa == 4:
             context['form'] = VotingForm4Variants()
+
     if varsa == 2:
         context['form'] = VotingForm2Variants()
     if varsa == 3:
         context['form'] = VotingForm3Variants()
     if varsa == 4:
         context['form'] = VotingForm4Variants()
+
     return render(request, 'votings/create.html', context)
+
 
 @login_required
 def votings_list_page(request):
@@ -123,11 +145,15 @@ def votings_list_page(request):
     context["voting_with_2_var"] = two_var
     answer = request.GET.get('variant', 0)
     to_publicate = True
+    
     if answer != 0:
         for i in models.VoteFact.get_facts_by_user(request.user):
             if models.VoteVariant.objects.filter(id=answer)[0].voting_id == i.variant.voting_id:
                 to_publicate = False
-    if answer != 0 and to_publicate:
+                messages.warning(request, 'Нельзя голосовать дважды')
+                break
+    if answer != 0 and to_publicate is True:
         models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
+        messages.success(request, 'Вы успешно проголосовали')
 
     return render(request, 'votings/list.html', context)

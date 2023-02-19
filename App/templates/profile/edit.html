@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-<!--{% load crispy_forms_tags %} -->
 {% block content %}
 <div class="container">
   <div class="row mt-5"> </div>
@@ -8,7 +7,14 @@
       <h1>Редактирование профиля</h1>
     </div>
 </div>
-
+{% if messages %}
+        {% for message in messages %}
+            <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+{% endif %}
 <form action="{% url 'profile_edit' %}" method="POST">
   {% csrf_token %}
   <div class="container">
