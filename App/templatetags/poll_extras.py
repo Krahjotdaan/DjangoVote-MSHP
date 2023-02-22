@@ -3,7 +3,7 @@ from django import setup
 
 setup()
 
-from App.models import VotedVoting
+from App.models import VotedVoting, VoteFact
 
 register = template.Library()
 
@@ -13,3 +13,7 @@ def is_voted(user, voting):
         return True
     else:
         return False
+
+@register.simple_tag
+def count_voices(variant):
+    return len(VoteFact.objects.filter(variant=variant))
