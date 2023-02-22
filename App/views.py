@@ -178,7 +178,7 @@ def votings_list_page(request):
     #     messages.success(request, 'Вы успешно проголосовали')
 
         if to_publicate: # если все в порядке, публикую
-            # models.VotedVoting.objects.create(author=request.user, voting=get_variant.voting_id) # создаю VotedVoting
+            models.VotedVoting.objects.create(author=request.user, voting=get_variant.voting_id) # создаю VotedVoting
             models.VoteFact.objects.create(author=request.user, variant=get_variant) # создаю VoteFact
             messages.success(request, 'Вы успешно проголосовали')
     context['to_publicate'] = to_publicate
