@@ -2,7 +2,9 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% load poll_extras %}
 {% block content %}
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -73,6 +75,11 @@
         grid-template-columns: repeat(2, 650px);
       }
 
+      .voted {
+        background: #ddd;
+      }
+
+
     </style>
 
 
@@ -100,55 +107,72 @@
 {% endif %}
 
 
-            <div class="wrapper">
-                {% for i in votings %}
-                    <div class="quiz mt-3">
-                        {{ ez }}
-                        <div class="top">
-                            <h4 class="question">{{i.title}}</h4>
-                            <div class="author_ava">
-                                <div class="author">от {{ i.author }}</div>
-                                <div class="ava"></div>
-                            </div>
+<div class="wrapper">
+    {% for i in votings %}
+    {% is_voted user i as voted %}
+    {% if voted %}
+    <div class="quiz mt-4 voted">
+    {% else %}
+    <div class="quiz mt-4">
+    {% endif %}
+            <div class="top">
+                <h4 class="question">{{i.title}}</h4>
+                <div class="author_ava">
+                    <div class="author">от {{ i.author }}</div>
+                    <div class="ava"></div>
+                </div>
 
-                        </div>
-                        <h6 class="opacity-90">{{ i.description }}</h6>
-                        <table class="space_between" style="width: 90%; height: 70%">
-                           <tr>
-                               {% for variant in variants %}
-                                    {% if variant.voting_id == i %}
-                                        {% if variant.voting_id in voting_with_2_var %}
-                                                <td style="text-align: center; padding-top:32px">
-                                                <div class="form-check">
-                                                    <div  class="btn-group" role="group" aria-label="Basic example">
-                                                        <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
-                                                    </div>
-                                                </div>
-                                                    {{test}}
-                                                </td>
-                                        {% else %}
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                                      <a href="?variant={{variant.id}}"><button type="button" class="btn btn-primary">{{ variant.description }}</button></a>
-                                                    </div>
-                                                    {{test}}
-                                                </div>
-                                            </td>
-                                                <td align="left">
-                                                    <div class="rectangle_1"></div>
-                                                </td>
-                                        </tr>
-
-                                        {% endif %}
-
-                                    {% endif %}
-                            {% endfor %}
-                        </table>
-                    </div>
-                {% endfor %}
             </div>
+            <h6 class="opacity-90">{{ i.description }}</h6>
+            <table class="space_between" style="width: 90%; height: 70%">
+                <tr>
+                    {% for variant in variants %}
+                    {% if variant.voting_id == i %}
+                    {% if variant.voting_id in voting_with_2_var %}
+                    <td style="text-align: center; padding-top:32px">
+                        <div class="form-check">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="?variant={{variant.id}}">
+                                    <button type="button" class="btn btn-primary">{{ variant.description }}</button>
+                                </a>
+                            </div>
+                        </div>
+                        {{test}}
+                    </td>
+                    {% else %}
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                {% count_voices variant as voices %}
+                                <a href="?variant={{variant.id}}">
+                                    <button type="button" class="btn btn-primary">{{ variant.description }} </button>
+                                </a>
+                                {{voices}}
+                            </div>
+                            {{test}}
+                        </div>
+                    </td>
+                    <td align="left">
+                        <div class="rectangle_1"></div>
+                    </td>
+                </tr>
+
+                {% endif %}
+
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+
+
+
+
 
 </body>
 </html>
