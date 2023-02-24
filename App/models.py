@@ -26,7 +26,19 @@ class Voting(models.Model):
     def get():
         return Voting.objects.all()
 
+    @staticmethod
+    def is_voted(user, voting):
+        if VotedVoting.objects.filter(author=user, voting=voting):
+            return True
+        else:
+            return False
 
+class VotedVoting(models.Model):
+    """
+    Таблица для обозначения проголосованных голосований
+    """
+    author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)
+    voting = models.ForeignKey(to=Voting, on_delete=models.CASCADE)
 class VoteVariant(models.Model):
     """
     Таблица вариантов ответов
@@ -62,11 +74,6 @@ class VoteFact(models.Model):
     @staticmethod
     def get_facts_by_variant(variant):
         return VoteFact.objects.filter(variant=variant)
-
-
-class VotedVoting(models.Model):
-    """
-    Таблица для обозначения проголосованных голосований
-    """
-    author = models.ForeignKey(to=User, default=1, on_delete=models.CASCADE)
-    voting = models.ForeignKey(to=Voting, on_delete=models.CASCADE)
+    @staticmethod
+    def get_variant_voting(variant):
+        return VoteFact.objects.filter(variant=variant).voting_id

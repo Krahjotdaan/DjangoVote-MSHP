@@ -13,16 +13,15 @@ def profile_page(request):
     context = dict()
     context['title'] = 'Настройки профиля'
     context['uservotings'] = models.VotedVoting.objects.all()
+    context = {
+        "title": "Настройки профиля",
+        "uservotings": models.VoteFact.get_facts_by_user(request.user)
+    }
     return render(request, 'profile/index.html', context)
 
 
 def index(request):
     context = dict()
-    if request.user.username == "":
-        messages.info(request, 'Вы вышли из аккаунта')
-    else:
-        messages.success(request, 'Вы успешно вошли в аккаунт')
-
     return render(request, 'index.html', context=context)
 
 
@@ -128,8 +127,10 @@ def make_voting(request):
     return render(request, 'votings/create.html', context)
 
 
-'''
+@login_required
 def votings_list_page(request):
+    if request.user.username is not None:
+        messages.success(request, "Вы успешно вошли в аккаунт")
     votings = models.Voting.objects.all().order_by('-id')
     variants = models.VoteVariant.objects.all()
     votings_voted = [False] * len(votings)
@@ -137,56 +138,10 @@ def votings_list_page(request):
         if votings[i].is_voted(request.user, votings[i]):
             votings_voted[i] = True
 
-    context = {
-        'votings': votings,
-        'variants': variants,
-        'voted_voting': models.VotedVoting.objects.all(),
-    }
-
-    ids = []
-    two_var = []
-    for i in variants:
-        ids.append(i.voting_id)
-    for i in ids:
-        if ids.count(i) == 2:
-            two_var.append(i)
-    context["voting_with_2_var"] = two_var
-
-    get_variant = request.GET.get('variant', 0)
-    facts = models.VoteFact.get_facts_by_user(request.user)
-    context['userita'] = request.user
-
-    # ↓↓↓ проверка на повторный отзыв ↓↓↓
-    to_publicate = True
-    if get_variant != 0:
-        get_variant = models.VoteVariant.objects.filter(id=get_variant)[0]
-        for i in facts:
-            if i.variant.voting_id == get_variant.voting_id:
-                to_publicate = False
-                messages.warning(request, 'Нельзя голосовать дважды')
-                break
-
-        if to_publicate:
-            models.VoteFact.objects.create(author=request.user, variant=get_variant)
-            messages.success(request, 'Вы успешно проголосовали')
-    context['to_publicate'] = to_publicate
-
-    return render(request, 'votings/list.html', context)
-'''
-
-
-def votings_list_page(request):
-    votings = models.Voting.objects.all().order_by('-id')
-    variants = models.VoteVariant.objects.all()
-    votings_voted = [False] * len(votings)
-    for i in range(len(votings)):
-        if votings[i].is_voted(request.user, votings[i]):
-            votings_voted[i] = True
 
     context = {
-        'votings': votings,
+        'data': data,
         'variants': variants,
-        'voted_voting': models.VotedVoting.objects.all(),
     }
 
     ids = []  # id всех вариантов ответов
@@ -198,6 +153,7 @@ def votings_list_page(request):
             two_var.append(i)
     context["voting_with_2_var"] = two_var
 
+
     get_variant = request.GET.get('variant', 0)
     facts = models.VoteFact.get_facts_by_user(request.user)
     context['userita'] = request.user
@@ -208,20 +164,17 @@ def votings_list_page(request):
     # if answer != 0:
     #     for i in models.VoteFact.get_facts_by_user(request.user):
     #         if models.VoteVariant.objects.filter(id=answer)[0].voting_id == i.variant.voting_id:
-    if (get_variant != 0):
-        get_variant = models.VoteVariant.objects.filter(id=get_variant)[0]  # меняю айди варианта на объект варианта
-        for i in facts:  # пробегаюсь по всем голосам юзера и проверяю относится ли один из них к голосованию текущего варианта
+    if(get_variant != 0):
+        get_variant = models.VoteVariant.objects.filter(id=get_variant)[0] # меняю айди варианта на объект варианта
+        for i in facts: # пробегаюсь по всем голосам юзера и проверяю относится ли один из них к голосованию текущего варианта
             if i.variant.voting_id == get_variant.voting_id:
                 to_publicate = False
                 messages.warning(request, 'Нельзя голосовать дважды')
                 break
-        # if answer != 0 and to_publicate is True:
-        #     models.VoteFact.objects.create(author=request.user, variant=models.VoteVariant.objects.filter(id=answer)[0])
-        #     messages.success(request, 'Вы успешно проголосовали')
 
-        if to_publicate:  # если все в порядке, публикую
-            # models.VotedVoting.objects.create(author=request.user, voting=get_variant.voting_id) # создаю VotedVoting
-            models.VoteFact.objects.create(author=request.user, variant=get_variant)  # создаю VoteFact
+        if to_publicate: # если все в порядке, публикую
+            models.VotedVoting.objects.create(author=request.user, voting=get_variant.voting_id) # создаю VotedVoting
+            models.VoteFact.objects.create(author=request.user, variant=get_variant) # создаю VoteFact
             messages.success(request, 'Вы успешно проголосовали')
     context['to_publicate'] = to_publicate
 
