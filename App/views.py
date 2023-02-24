@@ -140,7 +140,7 @@ def votings_list_page(request):
 
 
     context = {
-        'data': data,
+        'votings': votings,
         'variants': variants,
     }
 
