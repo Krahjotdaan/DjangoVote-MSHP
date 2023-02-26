@@ -137,10 +137,11 @@ def votings_list_page(request):
     for i in range(len(votings)):
         if votings[i].is_voted(request.user, votings[i]):
             votings_voted[i] = True
-
+    data = models.Voting.objects.all().order_by('-id')
+    variants = models.VoteVariant.objects.all()
 
     context = {
-        'votings': votings,
+        'data': data,
         'variants': variants,
     }
 
