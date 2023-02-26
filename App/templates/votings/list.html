@@ -17,14 +17,23 @@
       <link href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/sticky-footer-navbar.css"
          rel="stylesheet">
    </head>
-   <body>
+   <body class="bg-warning-subtle">
       {% include 'navbar.html' %}
-      <h1>.</h1>
+      <div></div>
       <div class="row row-cols-2 row-cols-md-3 g-4 mt-5">
          {% for i in data %}
          <div class="col">
-            <div class="card border-dark mb-3" style="max-width: 18rem;">
-               <div class="card-header">{{i.title}}</div>
+            <div class="card border-dark mb-3" style="max-width: 25rem;">
+               <div class="card-header">
+                  <div class="d-flex justify-content-between">
+
+                     <div class="p-2 flex-grow-1">{{i.title}}</div>
+                     <div class="p-2">от: {{i.author}}</div>
+
+                  </div>
+<!--                  {{i.title}}-->
+<!--                  <h6>{{i.author}}</h6>-->
+               </div>
                <div class="card-body">
                   <h5 class="card-title">{{i.description}}</h5>
                   <p class="card-text">
@@ -55,9 +64,7 @@
                <!-- =========================== -->
                </p>
             </div>
-            <div class="card-footer text-muted">
-               {{i.author}}
-            </div>
+
          </div>
       </div>
       {% endfor %}
