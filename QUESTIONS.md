@@ -14,7 +14,7 @@
 1) cd ~/NAME_OF_PROJECT
 <br> python3 -m venv venv
 2) source venv/bin/activate
-3) pip install --upgrade 
+3) python -m pip install --upgrade pip
 <br> pip install django
 4) pip install -r requirements.txt
 5) python3 manage.py migrate
